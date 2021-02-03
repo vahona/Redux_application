@@ -3,64 +3,78 @@ const redux = require('redux')
 
 
 
-function increment() {
-    return {
-        type: "INCREMENT"
-    }
+function changeCount(amount = 1) {
+  return {
+    type: "CHANGE_COUNT",
+    payload: amount
+  };
 }
 
-
-function decrement() {
+function addFavoriteThing(thing) {
     return {
-        type: "DECREMENT"
+        type: "ADD_FAVORITE_THING",
+        payload: thing
     }
+
 }
 
-
-function double() {
-    return {
-        type: "DOUBLE"
-    }
+function removeFavoriteThing(thing) {
+  return {
+    type: "REMOVE_FAVORITE_THING",
+    payload: thing,
+  };
 }
 
-
-function halve() {
-    return {
-        type: "HALVE"
-    }
+const initialState = {
+    count: 0,
+    favoriteThings: []
 }
 
+function reducer(state = initialState, action) {
+  switch (action.type) {
+    case "CHANGE_COUNT":
+      return {
+        ...state,
+        count: state.count + action.payload,
+      };
 
-function reducer(state = {count: 0}, action) {
-    switch(action.type) {
-         case "INCREMENT":
-          return {
-              count: state.count + 1
-          }
-      case "DECREMENT":
-          return {
-              count: state.count - 1
-          }
+    case "ADD_FAVORITE_THING":
+      return {
+        ...state,
+        favoriteThings: [...state.favoriteThings, action.payload],
+      };
 
-          case "DOUBLE":
-          return {
-              count: state.count * 2
-          }
+    case "REMOVE_FAVORITE_THING":
+      return {
+        ...state,
+        favoriteThings: state.favoriteThings.filter(
+          (thing) => thing.toLowerCase() !== action.payload.toLowerCase()
+        ),
+      };
 
-          case "HALVE":
-          return {
-              count: Math.floor(state.count / 2)
-          }
-
-      default :
-      
-      return state
-
-    }
+    default:
+      return state;
+  }
 }
 
 
 const store = redux.createStore(reducer)
+
+store.subscribe(() => {
+    console.log(store.getState());
+})
+
+
+store.dispatch(changeCount(2))
+store.dispatch(addFavoriteThing("Raindrops on roses"));
+store.dispatch(addFavoriteThing("Whiskers on kittens"));
+/**
+ * Challenge: implement an action creator called `removeFavoriteThing` which takes the string
+ * of the favorite thing you want to remove from the array and removes it
+ */
+store.dispatch(removeFavoriteThing("Raindrops on roses"));
+
+
 
 console.log(store);
 

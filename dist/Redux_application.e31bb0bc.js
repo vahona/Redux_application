@@ -856,58 +856,74 @@ if ("development" !== 'production' && typeof isCrushed.name === 'string' && isCr
   warning('You are currently using minified code outside of NODE_ENV === "production". ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or setting mode to production in webpack (https://webpack.js.org/concepts/mode/) ' + 'to ensure you have the correct code for your production build.');
 }
 },{"symbol-observable":"node_modules/symbol-observable/es/index.js"}],"index.js":[function(require,module,exports) {
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var redux = require('redux');
 
-function increment() {
+function changeCount() {
+  var amount = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
   return {
-    type: "INCREMENT"
+    type: "CHANGE_COUNT",
+    payload: amount
   };
 }
 
-function decrement() {
+function addFavoriteThing(thing) {
   return {
-    type: "DECREMENT"
+    type: "ADD_FAVORITE_THING",
+    payload: thing
   };
 }
 
-function double() {
+function removeFavoriteThing(thing) {
   return {
-    type: "DOUBLE"
+    type: "REMOVE_FAVORITE_THING",
+    payload: thing
   };
 }
 
-function halve() {
-  return {
-    type: "HALVE"
-  };
-}
+var initialState = {
+  count: 0,
+  favoriteThings: []
+};
 
 function reducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-    count: 0
-  };
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case "INCREMENT":
-      return {
-        count: state.count + 1
-      };
+    case "CHANGE_COUNT":
+      return _objectSpread(_objectSpread({}, state), {}, {
+        count: state.count + action.payload
+      });
 
-    case "DECREMENT":
-      return {
-        count: state.count - 1
-      };
+    case "ADD_FAVORITE_THING":
+      return _objectSpread(_objectSpread({}, state), {}, {
+        favoriteThings: [].concat(_toConsumableArray(state.favoriteThings), [action.payload])
+      });
 
-    case "DOUBLE":
-      return {
-        count: state.count * 2
-      };
-
-    case "HALVE":
-      return {
-        count: Math.floor(state.count / 2)
-      };
+    case "REMOVE_FAVORITE_THING":
+      return _objectSpread(_objectSpread({}, state), {}, {
+        favoriteThings: state.favoriteThings.filter(function (thing) {
+          return thing.toLowerCase() !== action.payload.toLowerCase();
+        })
+      });
 
     default:
       return state;
@@ -915,6 +931,18 @@ function reducer() {
 }
 
 var store = redux.createStore(reducer);
+store.subscribe(function () {
+  console.log(store.getState());
+});
+store.dispatch(changeCount(2));
+store.dispatch(addFavoriteThing("Raindrops on roses"));
+store.dispatch(addFavoriteThing("Whiskers on kittens"));
+/**
+ * Challenge: implement an action creator called `removeFavoriteThing` which takes the string
+ * of the favorite thing you want to remove from the array and removes it
+ */
+
+store.dispatch(removeFavoriteThing("Raindrops on roses"));
 console.log(store);
 },{"redux":"node_modules/redux/es/redux.js"}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
