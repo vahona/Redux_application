@@ -1,0 +1,22 @@
+{
+  "name": "redux_application",
+  "version": "1.0.0",
+  "description": "Redux",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vahona/Redux_application.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vahona/Redux_application/issues"
+  },
+  "homepage": "https://github.com/vahona/Redux_application#readme",
+  "dependencies": {
+    "redux": "^4.0.5"
+  }
+}
