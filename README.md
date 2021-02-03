@@ -1,0 +1,2 @@
+# Redux_application
+Redux
