@@ -855,7 +855,138 @@ function isCrushed() {}
 if ("development" !== 'production' && typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {
   warning('You are currently using minified code outside of NODE_ENV === "production". ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or setting mode to production in webpack (https://webpack.js.org/concepts/mode/) ' + 'to ensure you have the correct code for your production build.');
 }
-},{"symbol-observable":"node_modules/symbol-observable/es/index.js"}],"index.js":[function(require,module,exports) {
+},{"symbol-observable":"node_modules/symbol-observable/es/index.js"}],"redux/count.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.changeCount = changeCount;
+exports.countReducer = countReducer;
+exports.default = void 0;
+
+function changeCount() {
+  var amount = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+  return {
+    type: "CHANGE_COUNT",
+    payload: amount
+  };
+}
+
+function countReducer() {
+  var count = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case "CHANGE_COUNT":
+      return count + action.payload;
+
+    default:
+      return count;
+  }
+}
+
+var _default = countReducer;
+exports.default = _default;
+},{}],"redux/youTubeVideo.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.setYouTubeTitle = setYouTubeTitle;
+exports.incrementViewCount = incrementViewCount;
+exports.upvoteVideo = upvoteVideo;
+exports.downvoteVideo = downvoteVideo;
+exports.youTubeVideoReducer = youTubeVideoReducer;
+exports.default = void 0;
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function setYouTubeTitle(title) {
+  return {
+    type: "SET_YOUTUBE_TITLE",
+    payload: title
+  };
+}
+
+function incrementViewCount() {
+  return {
+    type: "INCREMENT_VIEW_COUNT"
+  };
+}
+
+function upvoteVideo() {
+  return {
+    type: "UPVOTE_VIDEO"
+  };
+}
+
+function downvoteVideo() {
+  return {
+    type: "DOWNVOTE_VIDEO"
+  };
+}
+
+var initialState = {
+  title: "",
+  viewCount: 0,
+  votes: {
+    up: 0,
+    down: 0
+  }
+};
+
+function youTubeVideoReducer() {
+  var youTubeVideo = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case "SET_YOUTUBE_TITLE":
+      return _objectSpread(_objectSpread({}, youTubeVideo), {}, {
+        title: action.payload
+      });
+
+    case "INCREMENT_VIEW_COUNT":
+      return _objectSpread(_objectSpread({}, youTubeVideo), {}, {
+        viewCount: youTubeVideo.viewCount + 1
+      });
+
+    case "UPVOTE_VIDEO":
+      return _objectSpread(_objectSpread({}, youTubeVideo), {}, {
+        votes: _objectSpread(_objectSpread({}, youTubeVideo.votes), {}, {
+          up: youTubeVideo.votes.up + 1
+        })
+      });
+
+    case "DOWNVOTE_VIDEO":
+      return _objectSpread(_objectSpread({}, youTubeVideo), {}, {
+        votes: _objectSpread(_objectSpread({}, youTubeVideo.votes), {}, {
+          down: youTubeVideo.votes.down + 1
+        })
+      });
+
+    default:
+      return youTubeVideo;
+  }
+}
+
+var _default = youTubeVideoReducer;
+exports.default = _default;
+},{}],"redux/favoriteThing.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.addFavoriteThing = addFavoriteThing;
+exports.removeFavoriteThing = removeFavoriteThing;
+exports.default = favoriteThingsReducer;
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -868,21 +999,8 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var redux = require('redux');
-
-function changeCount() {
-  var amount = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-  return {
-    type: "CHANGE_COUNT",
-    payload: amount
-  };
-}
+var _require = require("redux"),
+    bindActionCreators = _require.bindActionCreators;
 
 function addFavoriteThing(thing) {
   return {
@@ -898,53 +1016,84 @@ function removeFavoriteThing(thing) {
   };
 }
 
-var initialState = {
-  count: 0,
-  favoriteThings: []
-};
-
-function reducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+function favoriteThingsReducer() {
+  var favoriteThings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case "CHANGE_COUNT":
-      return _objectSpread(_objectSpread({}, state), {}, {
-        count: state.count + action.payload
-      });
-
     case "ADD_FAVORITE_THING":
-      return _objectSpread(_objectSpread({}, state), {}, {
-        favoriteThings: [].concat(_toConsumableArray(state.favoriteThings), [action.payload])
-      });
+      return [].concat(_toConsumableArray(favoriteThings), [action.payload]);
 
     case "REMOVE_FAVORITE_THING":
-      return _objectSpread(_objectSpread({}, state), {}, {
-        favoriteThings: state.favoriteThings.filter(function (thing) {
+      {
+        var updatedArr = favoriteThings.filter(function (thing) {
           return thing.toLowerCase() !== action.payload.toLowerCase();
-        })
-      });
+        });
+        return updatedArr;
+      }
 
     default:
-      return state;
+      return favoriteThings;
   }
 }
+},{"redux":"node_modules/redux/es/redux.js"}],"redux/index.js":[function(require,module,exports) {
+"use strict";
 
-var store = redux.createStore(reducer);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _count = _interopRequireDefault(require("./count"));
+
+var _youTubeVideo = _interopRequireDefault(require("./youTubeVideo"));
+
+var _favoriteThing = _interopRequireDefault(require("./favoriteThing"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var redux = require("redux");
+
+var combineReducers = redux.combineReducers,
+    createStore = redux.createStore;
+var rootReducer = combineReducers({
+  count: _count.default,
+  favoriteThings: _favoriteThing.default,
+  youtubeVideo: _youTubeVideo.default
+});
+var store = redux.createStore(rootReducer);
 store.subscribe(function () {
   console.log(store.getState());
 });
-store.dispatch(changeCount(2));
-store.dispatch(addFavoriteThing("Raindrops on roses"));
-store.dispatch(addFavoriteThing("Whiskers on kittens"));
-/**
- * Challenge: implement an action creator called `removeFavoriteThing` which takes the string
- * of the favorite thing you want to remove from the array and removes it
- */
+var _default = store;
+exports.default = _default;
+},{"redux":"node_modules/redux/es/redux.js","./count":"redux/count.js","./youTubeVideo":"redux/youTubeVideo.js","./favoriteThing":"redux/favoriteThing.js"}],"index.js":[function(require,module,exports) {
+"use strict";
 
-store.dispatch(removeFavoriteThing("Raindrops on roses"));
-console.log(store);
-},{"redux":"node_modules/redux/es/redux.js"}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var _redux = _interopRequireDefault(require("./redux"));
+
+var _count = require("./redux/count");
+
+var _favoriteThing = require("./redux/favoriteThing");
+
+var _youTubeVideo = require("./redux/youTubeVideo");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_redux.default.dispatch((0, _count.changeCount)(42));
+
+_redux.default.dispatch((0, _favoriteThing.addFavoriteThing)("wawooo"));
+
+_redux.default.dispatch((0, _favoriteThing.removeFavoriteThing)("wawooo"));
+
+_redux.default.dispatch((0, _youTubeVideo.setYouTubeTitle)("Miawon"));
+
+_redux.default.dispatch((0, _youTubeVideo.incrementViewCount)(2));
+
+_redux.default.dispatch((0, _youTubeVideo.upvoteVideo)());
+
+_redux.default.dispatch((0, _youTubeVideo.downvoteVideo)());
+},{"./redux":"redux/index.js","./redux/count":"redux/count.js","./redux/favoriteThing":"redux/favoriteThing.js","./redux/youTubeVideo":"redux/youTubeVideo.js"}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -972,7 +1121,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56269" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61511" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
